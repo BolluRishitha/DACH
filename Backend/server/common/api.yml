@@ -1,0 +1,169 @@
+openapi: 3.0.1
+info:
+  title: Secure Morph
+  description: Backend application for chameleon hashing based authentication
+  version: 1.0.0
+servers:
+  - url: /api/v1
+tags:
+  - name: Store Verification
+    description: Store Verification Data of the user to blockchain and offchain
+  - name: User Verification
+    description: Verify the user using the data stored in blockchain and offchain
+
+paths:
+  /storeVerification:
+    post:
+      tags:
+        - Store Verification
+      summary: Store a verification
+      description: Store a verification
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StoreVerificationBody'
+      responses:
+        200:
+          description: Return a message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+
+  /userVerification:
+    post:
+      tags:
+        - User Verification
+      summary: Verify a user
+      description: Verify a user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserVerificationBody'
+      responses:
+        200:
+          description: Return a message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+
+  /userVerification/delete:
+    delete:
+      tags:
+        - User Verification
+      summary: Delete a user
+      description: Delete a user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserVerificationBody'
+      responses:
+        200:
+          description: Return a message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+
+  /userVerification/updateEncryptionKey:
+    put:
+      tags:
+        - User Verification
+      summary: Update encryption key of a user
+      description: Update encryption key of a user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEncryptionKeyBody'
+      responses:
+        200:
+          description: Return a message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+
+  /userVerification/reduceKeyUseCount:
+    put:
+      tags:
+        - User Verification
+      summary: Reduce key use count of a user
+      description: Reduce key use count of a user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReduceKeyUseCountBody'
+      responses:
+        200:
+          description: Return a message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+
+components:
+  schemas:
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Success"
+
+    StoreVerificationBody:
+      type: object
+      properties:
+        userName:
+          type: string
+          example: "your-username"
+        encryptionKey:
+          type: string
+          example: "your-encryption-key"
+        mutableData:
+          type: object
+          example: {"name": "John Doe", "age": 30}
+        immutableData:
+          type: object
+          example: {"PAN Card": "XXXXXXX", "Aadhar Card": "XXXXXXX"}
+
+    UserVerificationBody:
+      type: object
+      properties:
+        userName:
+          type: string
+          example: "your-username"
+        encryptionKey:
+          type: string
+          example: "your-encryption-key"
+
+    UpdateEncryptionKeyBody:
+      type: object
+      properties:
+        userName:
+          type: string
+          example: "your-username"
+        encryptionKey:
+          type: string
+          example: "your-encryption-key"
+        newEncryptionKey:
+          type: string
+          example: "your-new-encryption-key"
+
+    ReduceKeyUseCountBody:
+      type: object
+      properties:
+        userName:
+          type: string
+          example: "your-username"
+        encryptionKey:
+          type: string
+          example: "your-encryption-key"
+        reduceCount:
+          type: integer
+          example: 1
